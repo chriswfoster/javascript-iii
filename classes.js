@@ -21,8 +21,17 @@ Each employee can:
 
 call your class Employee and receive all the data in the constructor in the order listed
 */
-
-
+class Employee {
+    constructor(first_name, last_name, email, age, makeWidget){
+    this.first_name = first_name;
+    this.last_name = last_name;
+    this.email = email;
+    this.age = age;
+    this.makeWidget = function() {return this.first_name + ' ' + this.last_name +' Widget' }
+    }
+    }
+    var ron = new Employee('Ron', 'Bergundy', 'ron@gmail.com', 23)
+    
 
 /*
 
@@ -41,6 +50,17 @@ call your class Manager
 
 */
 
+class Manager{
+    constructor(first_name, last_name, email, age, reports, hire, fire){
+        this.first_name = first_name;
+        this.last_name = last_name;
+        this.email = email;
+        this.age = age;
+        this.reports = [];
+        this.hire = function(newEmp){this.reports.push(newEmp);}
+        this.fire = function(termEmp){this.reports.splice(termEmp, 1);}
+    }
+}
 
 
 
@@ -64,7 +84,42 @@ Everytime they fire an employee they get $100 added to their bonus.
 
 call your class ProgressiveManager
 */
-
+class ProgressiveManager{  
+    constructor(first_name, last_name, email, age, hire, fire){
+            this.first_name = first_name;
+            this.last_name = last_name;
+            this.email = email;
+            this.age = age;
+            this.reports = [];
+            this.bonus = 0
+            this.title = 'Not a manager'
+        }
+        hire(newEmp){
+            this.reports.push(newEmp);
+            this.title = this.titleChecker()
+        }
+        fire(termEmp){
+            this.reports.splice(termEmp, 1);
+            this.title = this.titleChecker()
+            this.bonus += 100;
+        }
+        titleChecker(){
+          var titlez = this.reports.length
+            if (titlez >= 101) {
+            return 'Bestest Manager'  
+            } else if (titlez >= 51 && titlez <= 100){
+            return 'Manager Plus'
+            } else if (titlez >= 11 && titlez <= 50){
+                return 'Manager'
+            } else if (titlez >= 4 && titlez <= 10){
+                return 'Mostly Manager'
+            }else if ( titlez >= 1 && titlez <= 3){
+                return 'Barely Manager'
+            }else if (titlez == 0){
+                return 'Not a manager' 
+            }
+        }
+  }
 
 
 
@@ -90,3 +145,22 @@ It can :
       It should set decrease wear_and_tear_count by 10, and set needs_reboot to false
 
 */
+class Machine{
+    constructor(){
+        this.widgets_made_count = 0;
+        this.wear_and_tear_count = 0;
+        this.needs_reboot = false;
+    }
+    makeWidgets(num){
+        this.widgets_made_count += num
+        this.wear_and_tear_count = Math.floor(this.widgets_made_count / 50);    
+    }
+    fixMachine(){
+        this.needs_reboot = true;
+    }
+    reboot(){
+        this.wear_and_tear_count -= 10;
+        this.needs_reboot = false;
+        return function rebootComplete(){};
+    }
+}
